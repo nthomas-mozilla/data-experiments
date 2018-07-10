@@ -1,0 +1,51 @@
+Finding usage for on-push compile
+Finding usage for on-push all deved tests
+test-linux64-devedition/opt-telemetry-tests-client-e10s is in state failed instead of completed, ignoring
+test-windows7-32-devedition/opt-web-platform-tests-e10s-11 is in state failed instead of completed, ignoring
+test-linux32-devedition/opt-mochitest-browser-chrome-e10s-2 is in state failed instead of completed, ignoring
+Finding usage for release promote
+Finding usage for release push
+Finding usage for release ship
+Finding usage for release EME-free repack
+
+Time spent on full build:
+-------------------------
+Data for on-push compile (seconds):
+gecko-t-linux-xlarge                 1263
+gecko-3-b-linux                     13866
+signing-linux-v1                      842
+gecko-3-b-win2012                   14986
+
+Data for on-push all deved tests (seconds):
+gecko-t-win10-64-hw                  2635
+gecko-t-win7-32                     44475
+gecko-t-win7-32-gpu                 15565
+gecko-t-osx-1010                    48998
+gecko-t-linux-xlarge                40221
+gecko-t-win10-64-gpu                 4457
+gecko-t-win10-64                    40012
+gecko-t-linux-large                 90511
+
+Data for release promote (seconds):
+gecko-3-b-linux                    203031
+beetmoverworker-v1                  25180
+balrogworker-v1                      8737
+signing-linux-v1                    66617
+gecko-3-b-win2012                  291854
+
+Data for release push (seconds):
+
+Data for release ship (seconds):
+shipit-v1                              10
+balrogworker-v1                         7
+gecko-3-b-linux                         7
+
+Estimated time spent by repacking:
+----------------------------------
+Data for release EME-free repack (seconds):
+gecko-3-b-macosx64                  13870
+gecko-3-b-linux                     17239
+beetmoverworker-v1                  18074
+signing-linux-v1                    27555
+gecko-3-b-win2012                  161230
+
