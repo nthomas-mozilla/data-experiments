@@ -200,7 +200,7 @@ print("""Caveats:
 Comments:
 * This is all broad brush strokes but
   * switching to a repack could have a significant effect on total CPU seconds - roughly 50% lower
-    than the ~585k for each release. Frequency is not high - 2 per week, assuming one build per
+    than the ~595k for each release. Frequency is not high - 2 per week, assuming one build per
     beta
   * on-push build is more modest, 31k seconds, but might be significant if the number of pushes
     is considered
