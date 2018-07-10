@@ -49,3 +49,27 @@ beetmoverworker-v1                  18074
 signing-linux-v1                    27555
 gecko-3-b-win2012                  161230
 
+Caveats:
+* a DevEdition repack would probably be more complicated than EME-free and take longer
+* Linux repacks would be slower than the Mac-based estimate because thay have to bz decompress
+  a tar.bz2 before adding files, then recompress; Mac just appends to a zip
+* This will probably still be small beer compared to windows repackage work on gecko-3-b-win2012
+  (see also bug 1438894)
+* unclear what to do about some work, eg langpacks, update verify, source
+* we are already slamming the mac signing servers with peak load for partner and EME-free repacks
+  and need to do some work there to improve chunking. This may slow signing down.
+* non-trivial chance I've incorrectly assigned cpu time
+
+Comments:
+* This is all broad brush strokes but
+  * switching to a repack could have a significant effect on total CPU seconds - roughly 50% lower
+    than the ~585k for each release. Frequency is not high - 2 per week, assuming one build per
+    beta
+  * on-push build is more modest, 31k seconds, but might be significant if the number of pushes
+    is considered
+  * switching off on-push tests (if that's sensible) could save ~285k seconds per push. Some of
+    that is on physical pools which have a fixed sized contraint but different cost metrics
+  * we need to turn these into $ per release cycle to get a better idea of impact
+* As well as considering compute time, we also care about wall clock time for releases. A repack
+  would wait until all the Beta l10n is done, rather than proceeding in parallel.
+
