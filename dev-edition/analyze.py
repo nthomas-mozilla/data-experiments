@@ -49,7 +49,6 @@ class InstanceTime:
         # otherwise default to unity
         return 1
 
-
     def get_usage(self):
         log.info('Finding usage for {}'.format(self.use_hint))
         if not self.include and not self.exclude:
@@ -73,7 +72,7 @@ class InstanceTime:
                     log.warn('{} is in state {} instead of completed, ignoring'.format(
                         label, run['state']))
                     continue
-                elapsed = arrow.get(run['resolved'])  - arrow.get(run['started'])
+                elapsed = arrow.get(run['resolved']) - arrow.get(run['started'])
                 multiplier = self.get_multiplier(label)
                 self.instance_time[worker] += elapsed.total_seconds() * multiplier
                 log.debug('INCLUDE {} {} {} m={} t={}'.format(taskId, label, worker,
@@ -90,7 +89,7 @@ class InstanceTime:
 logging.basicConfig(level=logging.INFO, format='%(message)s')
 log = logging.getLogger(__name__)
 
-CACHE=os.path.abspath('cache')
+CACHE = os.path.abspath('cache')
 if not os.path.exists(CACHE):
     os.makedirs(CACHE)
 
@@ -98,7 +97,7 @@ queue = taskcluster.Queue()
 
 """
 We're looking at DevEdition 62.0b6, and want to calculate the total instance-time of work
-we would not do if we were repacking Beta instead. So en-US nightlies, the release automation, 
+we would not do if we were repacking Beta instead. So en-US nightlies, the release automation,
 and possibly the tests. Later we'll estimate what a repack would use.
 """
 # on-push graph: SC__1kWXR4esb499TFHyPQ
@@ -129,7 +128,6 @@ promote_time = InstanceTime(
         '^release-update-verify-devedition-.*',
         '^sign-and-push-langpacks-.*',              # maybe just the AMO push and reuse Beta xpi ?
     ],
-#    include=['.*'],
 )
 
 push_time = InstanceTime(
@@ -150,13 +148,13 @@ ship_time = InstanceTime(
 )
 
 """
-Now lets look at the Firefox 61.0.1 build to see how long it takes to do EME-free on Mac and 
+Now lets look at the Firefox 61.0.1 build to see how long it takes to do EME-free on Mac and
 Windows, as an estimate for how long a devtools repack might take. EME-free because it's the only
-repack we do for all locales, but not on Linux so there's a hacky multiplier applied to jobs on 
-Mac that are also done on Linux. Filesizes are most similar on those two platforms. 
+repack we do for all locales, but not on Linux so there's a hacky multiplier applied to jobs on
+Mac that are also done on Linux. Filesizes are most similar on those two platforms.
 
-All other work we'd need to do, like generate checksums, modify bouncer, etc, has been left into the 
-analysis above and doesn't to be added again here. 
+All other work we'd need to do, like generate checksums, modify bouncer, etc, has been left into
+the analysis above and doesn't to be added again here.
 """
 eme_free_repack_time = InstanceTime(
     'DgylP9ewT_2-SLCclTex0A',
@@ -164,9 +162,9 @@ eme_free_repack_time = InstanceTime(
     include=[
         '^release-eme-free-.*',
     ],
-    multipliers = {
-        # prefix: value
-        'release-eme-free-repack-macosx64-nightly': 3,   # tar.bz2 repacking may be slower than .zip
+    multipliers={
+        # task name prefix: multiplier value
+        'release-eme-free-repack-macosx64-nightly': 3,  # tar.bz2 repacking may be slower than .zip
         'release-eme-free-repack-repackage-signing-macosx64': 3,    # gpg signing
         'release-eme-free-repack-beetmover-macosx64': 3,            # move to candidates
         'release-eme-free-repack-beetmover-checksums-macosx64': 3,  # for SHA256SUMS et al.
